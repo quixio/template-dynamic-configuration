@@ -1,0 +1,20 @@
+name: HTTP Config Processor
+language: python
+variables:
+  - name: DATA_TOPIC
+    inputType: InputTopic
+    description: Name of the data topic to listen to.
+    defaultValue: data_topic
+  - name: CONFIG_TOPIC
+    inputType: InputTopic
+    description: Name of the config topic to listen to.
+    defaultValue: config_topic
+  - name: output
+    inputType: OutputTopic
+    multiline: false
+    description: Name of the output topic to write to.
+    defaultValue: output_topic
+dockerfile: dockerfile
+runEntryPoint: main.py
+defaultFile: main.py
+libraryItemId: starter-transformation
