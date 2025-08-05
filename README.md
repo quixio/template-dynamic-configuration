@@ -8,6 +8,42 @@ It also includes visualization/dashboard examples using Grafana (which queries I
 
 
 
+## Running the Template
+
+### Syncing
+Once the project is set up, an initial sync must be performed to deploy everything. 
+
+Essentially, the cloud state must sync up to the current state of the new repository 
+which now has a cloned version of the template.
+
+![img](images/sync.png)
+
+Syncing is always a manually initiated operation that's available whenever updates 
+to the code (underlying repository) happen.
+
+### Setting Secrets
+
+>**WARNING**: These secrets exist to act as an authentication layer since 
+> ***some services are openly accessible to the entire internet***;
+> as such: **DO NOT PICK WEAK PASSWORDS**.
+
+Upon syncing, there will be a prompt to set up some project-level secrets (passwords). 
+Simply choose a secure password for each.
+
+![img](images/secrets_missing.png)
+
+![img](images/secrets_set.png)
+
+Note that once set, you cannot view the values again. This largely only matters for 
+services like Grafana, where users will be required to directly enter them for access to 
+the UI, so make sure you save the value somewhere. 
+
+Other services will reference these secrets directly in their project deployment 
+configurations, so they do not need to be manually entered.
+
+
+
+
 ## Project Architecture
 
 ### HTTP Ingestion and Processing Pipeline
@@ -15,7 +51,6 @@ It also includes visualization/dashboard examples using Grafana (which queries I
 This is the HTTP-based data ingestion and processing portion of the project:
 
 ![img](images/pipeline.png)
-
 
 
 ### Mock Data Source
@@ -37,16 +72,16 @@ These are standalone services, including an InfluxDB2 instance.
 ## Configuration
 
 There are various things that can be tweaked, like the name of the InfluxDB database. 
-However, everything in this template has predefined values except secrets, which will
-require defining upon deployment of this project.
+Some will be configurable via environment, and others will require adjusting code as
+desired.
 
-### Required Secrets
+Regardless, everything in this template has predefined values except secrets, which will
+require defining upon deployment of this project (see [setting secrets](#setting-secrets)).
 
-These will be requested once this project template is deployed:
+### Using the Printer Configuration UI
 
-- **influxdb_admin_token**
-- **influxdb_admin_password**
-- **http_auth_token**
+To learn how to adjust a printer config via the Printer Configuration UI, see [applying a printer config](#applying-printer-config).
+
 
 
 
