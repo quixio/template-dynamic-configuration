@@ -222,12 +222,29 @@ def main(page: ft.Page):
         message_banner.content.controls[1] = ft.Text(message, color=ft.Colors.GREEN, expand=True)
         message_banner.visible = True
         page.update()
-    
+
+    def create_default_config():
+        try:
+            create_machine_configuration(
+                "3D_PRINTER_2", "DEFAULT", "1.0", {"T001": "sensor_1", "T002": "sensor_2"},
+            )
+        except:
+            raise Exception("No configs exist and unable to create default config")
+
     def refresh_config_selector():
         """Refresh the configuration selector dropdown"""
         nonlocal existing_configs
         try:
             existing_configs = fetch_existing_configs()
+            if not existing_configs:
+                # A default/example config to get you started.
+                create_machine_configuration(
+                    machine_id="3D_PRINTER_2", 
+                    editor_name="DEFAULT", 
+                    field_scalar="1.0", 
+                    mapping={"T001": "sensor_1", "T002": "sensor_2"},
+                )
+                refresh_config_selector()
             
             # Create dropdown options
             config_options = [ft.dropdown.Option("Create New Configuration")]
