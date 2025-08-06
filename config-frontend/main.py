@@ -223,14 +223,6 @@ def main(page: ft.Page):
         message_banner.visible = True
         page.update()
 
-    def create_default_config():
-        try:
-            create_machine_configuration(
-                "3D_PRINTER_2", "DEFAULT", "1.0", {"T001": "sensor_1", "T002": "sensor_2"},
-            )
-        except:
-            raise Exception("No configs exist and unable to create default config")
-
     def refresh_config_selector():
         """Refresh the configuration selector dropdown"""
         nonlocal existing_configs
