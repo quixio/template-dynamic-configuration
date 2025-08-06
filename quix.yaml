@@ -361,8 +361,3 @@ topics:
   - name: config_processed_data
     dataTier: Silver
   - name: config-updates
-  - name: config-api-v1
-  - name: quix
-  - name: configuration-api
-  - name: mongo_url
-  - name: 1
