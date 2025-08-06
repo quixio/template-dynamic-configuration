@@ -28,6 +28,7 @@ def config_apply(row: dict) -> dict:
     The config is a dict that looks like:
     {"editor_name": "The Editor", "mapping": {"T001": "sensor_1", "T002": "sensor_2"}, "field_scalar": .50}
     """
+    print(row)
     final_row = {
         "machine": row.pop("machine"),
         "config_editor": row.pop("editor_name"),
