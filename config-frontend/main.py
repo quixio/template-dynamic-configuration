@@ -233,7 +233,7 @@ def main(page: ft.Page):
                 create_machine_configuration(
                     machine_id="3D_PRINTER_2", 
                     editor_name="DEFAULT", 
-                    field_scalar=1.0, 
+                    scalar=1.0,
                     mapping={"T001": "sensor_1", "T002": "sensor_2"},
                 )
                 refresh_config_selector()
