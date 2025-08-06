@@ -223,7 +223,7 @@ deployments:
       - name: INFLUXDB_TAG_KEYS
         inputType: FreeText
         description: 'The tags to include when writing the measurement data. Example: Tag1,Tag2'
-        value: "machine,editor"
+        value: machine,editor
       - name: INFLUXDB_FIELD_KEYS
         inputType: FreeText
         description: 'The fields to include when writing the measurement data. Example: Field1,Field2'
@@ -361,3 +361,4 @@ topics:
   - name: config_processed_data
     dataTier: Silver
   - name: config-updates
+  - name: config-api-v1
