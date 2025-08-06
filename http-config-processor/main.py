@@ -34,9 +34,9 @@ def config_apply(row: dict) -> dict:
         "timestamp": row.pop("timestamp"),
     }
     scalar = float(row.pop("field_scalar"))
-    # Note: remaining row keys are scalar fields that were not provided a mapping
+    mapping = row.pop("mapping")
     for field_id in row.keys():
-        final_row[row["mappings"].get(field_id, field_id)] = row[field_id] * scalar
+        final_row[mapping.get(field_id, field_id)] = row[field_id] * scalar
     return final_row
 
 
