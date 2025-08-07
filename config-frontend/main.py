@@ -1,3 +1,5 @@
+import os
+
 import flet as ft
 
 
@@ -10,7 +12,34 @@ from configuration_svc import (
 )
 
 
+def auth_page(page: ft.Page):
+    def try_login(e):
+        if password.value == os.environ["CONFIG_UI_AUTH_TOKEN"]:
+            main(page)
+        else:
+            login_error.value = "Invalid auth token; try again."
+            login_error.update()
+
+    password = ft.TextField(label="Token", password=True, can_reveal_password=True)
+    login_button = ft.ElevatedButton("Login", on_click=try_login)
+    login_error = ft.Text(color="red")
+
+    page.add(
+        ft.Column(
+            [
+                ft.Text("Please provide the UI auth token", size=20),
+                password,
+                login_button,
+                login_error
+            ],
+            alignment=ft.MainAxisAlignment.CENTER,
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+        )
+    )
+
+
 def main(page: ft.Page):
+    page.clean()
     page.title = "Machine Configuration Form"
     page.vertical_alignment = ft.MainAxisAlignment.START
     page.padding = 20

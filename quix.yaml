@@ -349,6 +349,11 @@ deployments:
         inputType: FreeText
         required: true
         value: http://config-api-svc/api/v1
+      - name: CONFIG_UI_AUTH_TOKEN
+        inputType: Secret
+        multiline: false
+        required: true
+        secretKey: config_ui_auth_token
 
 # This section describes the Topics of the data pipeline
 topics:

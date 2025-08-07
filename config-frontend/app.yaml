@@ -5,6 +5,10 @@ variables:
     inputType: FreeText
     multiline: false
     required: true
+  - name: CONFIG_UI_AUTH_TOKEN
+    inputType: Secret
+    multiline: false
+    required: true
 dockerfile: dockerfile
 runEntryPoint: main.py
 defaultFile: main.py
