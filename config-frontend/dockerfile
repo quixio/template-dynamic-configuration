@@ -13,5 +13,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Expose the port that Flet uses
 EXPOSE 80
 
-# Run the Flet app
-CMD ["python", "main.py"]
+# Make entrypoint executable
+RUN chmod +x entrypoint.sh
+
+# Use entrypoint script
+ENTRYPOINT ["/app/entrypoint.sh"]

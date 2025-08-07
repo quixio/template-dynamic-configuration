@@ -115,3 +115,14 @@ def get_existing_target_keys(configs: List[Dict]) -> List[str]:
         for config in configs 
         if 'metadata' in config and 'target_key' in config['metadata']
     ]
+
+
+if __name__ == '__main__':
+    if not fetch_existing_configs():
+        # A default/example config to get you started.
+        create_machine_configuration(
+            machine_id="3D_PRINTER_2",
+            editor_name="DEFAULT_INIT",
+            scalar=1.0,
+            mapping={"T001": "sensor_1", "T002": "sensor_2"},
+        )
