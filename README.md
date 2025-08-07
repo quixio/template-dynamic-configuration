@@ -105,7 +105,7 @@ to join the config values (which are dumped to a topic) with another topic's dat
 which can be adjusted in real time using the `Quix Configuration API`.
 
 To learn more and how this pattern is applied in this template, see 
-[applying a printer config](#applying-printer-config).
+[applying a printer config](#applying-a-printer-config).
 
 
 ### Using the Printer Configuration UI
@@ -162,10 +162,18 @@ This aggregation is done using a Quix Streams `tumbling_window` operation, found
 
 ### Applying a Printer Config
 
-![img](images/frontend_link.png)
-
 Using the `Maching Config UI` service, you can set what values will be used by the 
 `HTTP Config Processor`.
+
+#### Accessing the Machine Config UI
+
+![img](images/frontend_login.png)
+
+The token should be what `config_ui_auth_token` was set to during the initial template sync.
+
+#### Using the Machine Config UI
+
+![img](images/frontend_link.png)
 
 By default, these will be the settings:
 
