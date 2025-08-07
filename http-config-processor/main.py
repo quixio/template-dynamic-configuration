@@ -49,7 +49,7 @@ def main():
         auto_offset_reset="earliest"
     )
 
-    data_topic = app.topic(name=os.environ["DATA_TOPIC"], key_serializer="str")
+    data_topic = app.topic(name=os.environ["DATA_TOPIC"], key_deserializer="str")
     config_topic = app.topic(name=os.environ["CONFIG_TOPIC"])
     output_topic = app.topic(name=os.environ["output"])
     sdf = app.dataframe(topic=data_topic)
