@@ -57,7 +57,7 @@ def main():
     # It communicates with the `Configuration API svc` to retrieve configs
     # based on a combination of message key and config "type".
     # The retrieved structure is templated (with the ability to customize as needed)
-    # and for this example can be inspected in the `Machine Configuration UI` frontend.
+    # and for this example can be inspected in the `Maching Config UI` frontend.
     enricher = QuixConfigurationService(
         topic=config_topic,
         app_config=app.config,

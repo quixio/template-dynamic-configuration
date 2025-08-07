@@ -333,7 +333,7 @@ deployments:
         description: The root password to initialize MongoDB with
         required: true
         secretKey: mongo_password
-  - name: Machine Configuration UI
+  - name: Maching Config UI
     application: config-frontend
     version: latest
     deploymentType: Service

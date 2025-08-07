@@ -160,7 +160,7 @@ This aggregation is done using a Quix Streams `tumbling_window` operation, found
 
 ![img](images/frontend_link.png)
 
-Using the `Machine Configuration UI` service, you can set what values will be used by the 
+Using the `Maching Config UI` service, you can set what values will be used by the 
 `HTTP Config Processor`.
 
 By default, these will be the settings:
