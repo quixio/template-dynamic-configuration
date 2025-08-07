@@ -1,8 +1,8 @@
 # HTTP Ingestion with Quix Configuration Project Template
 
-This example project `demonstrates` how to receive data from an HTTP endpoint, 
-do some normalizations followed by applying a Quix Configuration set by a frontend
-application, and then publish the augmented data to an InfluxDB2 database.
+This example project demonstrates how to receive data from an HTTP endpoint, 
+do some normalizations, followed by applying a Quix Configuration set through a UI,
+and then publish the augmented data to an InfluxDB2 database.
 
 It also includes visualization/dashboard examples using Grafana (which queries InfluxDB2).
 
