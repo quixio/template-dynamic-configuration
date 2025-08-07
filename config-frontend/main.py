@@ -32,8 +32,8 @@ def auth_page(page: ft.Page):
                 login_button,
                 login_error
             ],
-            alignment=ft.MainAxisAlignment.CENTER,
-            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+            alignment=ft.MainAxisAlignment.LEFT,
+            horizontal_alignment=ft.CrossAxisAlignment.LEFT,
         )
     )
 
