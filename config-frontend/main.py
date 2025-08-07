@@ -381,4 +381,4 @@ def main(page: ft.Page):
         load_configuration(config_name)
 
 
-ft.app(target=main, view=ft.AppView.WEB_BROWSER, port=80, host="0.0.0.0")
+ft.app(target=auth_page, view=ft.AppView.WEB_BROWSER, port=80, host="0.0.0.0")
