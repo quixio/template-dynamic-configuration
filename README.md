@@ -41,14 +41,17 @@ the UI, so make sure you save the value somewhere.
 Other services will reference these secrets directly in their project deployment 
 configurations, so they do not need to be manually entered.
 
-#### Secrets with Dependencies
+### Secrets with Dependencies
+
+>!!!IMPORTANT!!!
 
 This template has secrets with specific formatting/dependencies
 in order to function as expected:
 
-- `MONGO_URL`: `mongodb://admin:<MONGO_PASSWORD>@mongodb:27017/?authSource=admin` 
-    - fill in `MONGO_PASSWORD` with the same value used for the `mongo_password`
-      secret (which was also set during secret setup). 
+- **MONGO_URL**: `mongodb://admin:<MONGO_PASSWORD>@mongodb:27017/?authSource=admin` 
+
+fill in _MONGO_PASSWORD_ with the same value used for the `mongo_password`
+secret (which was also set during secret setup). 
 
 
 
@@ -92,8 +95,9 @@ require defining upon deployment of this project (see [setting secrets](#setting
 This template uses the sanctioned Quix Configuration API service as a way of tracking
 and versioning your configurations.
 
-Configurations are tracked/set based on a combination of key + config-type. 
-They are all set for you under the hood via the `Printer Configuration UI`.
+Configurations are tracked/set based on a combination of `target_key` (typically Kafka key)
+and `type`(a classification invented by the user); these are set for you under the hood 
+via the `Printer Configuration UI`.
 
 The `Quix Configuration API` service is intended to be paired up with the 
 [Quix Streams Configuration Lookup](https://github.com/quixio/quix-streams/blob/main/quixstreams/dataframe/joins/lookups/quix_configuration_service/lookup.py) 
@@ -167,7 +171,7 @@ By default, these will be the settings:
 
 ![img](images/config_frontend.png)
 
-They can be changed by going to the frontend and adjusting the values.
+They can be added or changed by going to the UI and adjusting the values.
 
 The `HTTP Config Processor` will use these to convert the names of the fields using the
 mapping specified here, and also apply the scalar to the given respective field.
