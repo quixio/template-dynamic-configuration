@@ -162,7 +162,7 @@ This aggregation is done using a Quix Streams `tumbling_window` operation, found
 
 ### Applying a Printer Config
 
-Using the `Maching Config UI` service, you can set what values will be used by the 
+Using the `Machine Config UI` service, you can set what values will be used by the 
 `HTTP Config Processor`.
 
 #### Accessing the Machine Config UI
