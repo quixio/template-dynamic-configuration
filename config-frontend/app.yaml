@@ -1,4 +1,4 @@
-name: machine-config-form
+name: machine-configuration-ui
 language: Python
 variables:
   - name: CONFIG_API_BASE_URL

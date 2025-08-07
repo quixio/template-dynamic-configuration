@@ -96,10 +96,10 @@ flet main.py
 
 ```bash
 # Build Docker image
-docker build -t machine-config-form .
+docker build -t machine-configuration-ui .
 
 # Run container
-docker run -p 80:80 -e CONFIG_API_BASE_URL="http://api:8080/api/v1" machine-config-form
+docker run -p 80:80 -e CONFIG_API_BASE_URL="http://api:8080/api/v1" machine-configuration-ui
 ```
 
 ## Usage

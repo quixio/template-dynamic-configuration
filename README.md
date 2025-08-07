@@ -1,7 +1,7 @@
-# HTTP Ingestion with DB Configuration Project Template
+# HTTP Ingestion with Quix Configuration Project Template
 
 This example project `demonstrates` how to receive data from an HTTP endpoint, 
-do some normalizations followed by applying a configuration set by a frontend
+do some normalizations followed by applying a Quix Configuration set by a frontend
 application, and then publish the augmented data to an InfluxDB2 database.
 
 It also includes visualization/dashboard examples using Grafana (which queries InfluxDB2).
@@ -41,6 +41,14 @@ the UI, so make sure you save the value somewhere.
 Other services will reference these secrets directly in their project deployment 
 configurations, so they do not need to be manually entered.
 
+#### Secrets with Dependencies
+
+This template has secrets with specific formatting/dependencies
+in order to function as expected:
+
+- `MONGO_URL`: `mongodb://admin:<MONGO_PASSWORD>@mongodb:27017/?authSource=admin` 
+    - fill in `MONGO_PASSWORD` with the same value used for the `mongo_password`
+      secret (which was also set during secret setup). 
 
 
 
@@ -77,6 +85,24 @@ desired.
 
 Regardless, everything in this template has predefined values except secrets, which will
 require defining upon deployment of this project (see [setting secrets](#setting-secrets)).
+
+
+### Quix Configuration API
+
+This template uses the sanctioned Quix Configuration API service as a way of tracking
+and versioning your configurations.
+
+Configurations are tracked/set based on a combination of key + config-type. 
+They are all set for you under the hood via the `Printer Configuration UI`.
+
+The `Quix Configuration API` service is intended to be paired up with the 
+[Quix Streams Configuration Lookup](https://github.com/quixio/quix-streams/blob/main/quixstreams/dataframe/joins/lookups/quix_configuration_service/lookup.py) 
+to join the config values (which are dumped to a topic) with another topic's data, 
+which can be adjusted in real time using the `Quix Configuration API`.
+
+To learn more and how this pattern is applied in this template, see 
+[applying a printer config](#applying-printer-config).
+
 
 ### Using the Printer Configuration UI
 
@@ -130,9 +156,11 @@ This aggregation is done using a Quix Streams `tumbling_window` operation, found
 `HTTP Data Normalization` application.
 
 
-### Applying Printer Config
+### Applying a Printer Config
 
-Using the `Configuration Frontend`, you can set what values will be used by the 
+![img](images/frontend_link.png)
+
+Using the `Machine Configuration UI` service, you can set what values will be used by the 
 `HTTP Config Processor`.
 
 By default, these will be the settings:
@@ -169,3 +197,10 @@ There is a simple Time Series graph and mean value gauge, each based on the
 selected time window.
 
 ![img](images/grafana.png)
+
+### Accessing Grafana
+
+![img](images/grafana_link.png)
+- **username**: `admin`
+- **password**: whatever value `grafana_password` was set to when
+  first setting up the template.
