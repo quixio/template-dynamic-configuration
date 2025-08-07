@@ -340,7 +340,7 @@ deployments:
       replicas: 1
     publicAccess:
       enabled: true
-      urlPrefix: machine-configuration-ui
+      urlPrefix: machine-config-ui
     variables:
       - name: CONFIG_API_BASE_URL
         inputType: FreeText
