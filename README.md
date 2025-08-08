@@ -54,6 +54,15 @@ fill in _MONGO_PASSWORD_ with the same value used for the `mongo_password`
 secret (which was also set during secret setup). 
 
 
+### Service Startup Delays and Application Restarts
+
+Upon first sync, it is normal that some applications may restart/error a few times while 
+some of its dependencies are still starting up.
+
+Applications should not need to restart more than 3-5 times before everything is
+up and running.
+
+
 
 ## Project Architecture
 
