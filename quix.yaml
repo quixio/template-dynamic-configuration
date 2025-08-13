@@ -266,7 +266,7 @@ deployments:
         description: Name of the output topic to write to.
         value: config_processed_data
   - name: Configuration API svc
-    image: quixtemplatas.azurecr.io/quixio/configuration-api-service:sha-d267b6eb
+    image: quixcontainerregistry.azurecr.io/dynamicconfigurationservice:20250812.2
     deploymentType: Service
     resources:
       cpu: 200
@@ -294,11 +294,24 @@ deployments:
         inputType: FreeText
         multiline: true
         value: configuration-api
-      - name: MONGO_URL
+      - name: MONGO_HOST
+        inputType: FreeText
+        multiline: true
+        required: true
+        default: mongodb
+      - name: MONGO_PORT
+        multiline: true
+        required: true
+        default: 27017
+      - name: MONGO_USER
+        inputType: FreeText
+        multiline: true
+        value: admin
+      - name: MONGO_PASSWORD
         inputType: Secret
         multiline: true
         required: true
-        secretKey: mongo_url
+        secretKey: mongo_password
       - name: WORKERS
         inputType: FreeText
         multiline: true
