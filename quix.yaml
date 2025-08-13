@@ -307,6 +307,7 @@ deployments:
       - name: MONGO_USER
         inputType: FreeText
         multiline: true
+        required: true
         value: admin
       - name: MONGO_PASSWORD
         inputType: Secret
