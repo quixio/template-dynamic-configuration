@@ -266,7 +266,8 @@ deployments:
         description: Name of the output topic to write to.
         value: config_processed_data
   - name: Configuration API svc
-    image: quixtemplatas.azurecr.io/quixio/configuration-api-service:sha-b4ffc8a
+    image: quixtemplatas.azurecr.io/quixio/configuration-api-service
+    version: 20250813.2-auth
     deploymentType: Service
     resources:
       cpu: 200
