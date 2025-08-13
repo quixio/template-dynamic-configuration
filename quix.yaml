@@ -300,6 +300,7 @@ deployments:
         required: true
         default: mongodb
       - name: MONGO_PORT
+        inputType: FreeText
         multiline: true
         required: true
         default: 27017
