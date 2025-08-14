@@ -272,6 +272,9 @@ deployments:
       cpu: 200
       memory: 1000
       replicas: 1
+    publicAccess:
+      enabled: true
+      urlPrefix: config-api-svc
     network:
       serviceName: config-api-svc
       ports:
@@ -368,7 +371,6 @@ deployments:
         value: http://config-api-svc/api/v1
       - name: CONFIG_UI_AUTH_TOKEN
         inputType: Secret
-        multiline: false
         required: true
         secretKey: config_ui_auth_token
 
