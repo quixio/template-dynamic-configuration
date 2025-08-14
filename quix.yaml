@@ -368,7 +368,7 @@ deployments:
       - name: CONFIG_API_BASE_URL
         inputType: FreeText
         required: true
-        value: http://config-api-svc/api/v1
+        value: http://config-api-svc:80/api/v1
       - name: CONFIG_UI_AUTH_TOKEN
         inputType: Secret
         required: true
