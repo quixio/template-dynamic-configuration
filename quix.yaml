@@ -314,6 +314,11 @@ deployments:
         multiline: true
         required: true
         secretKey: mongo_password
+      - name: PORT
+        inputType: FreeText
+        multiline: true
+        required: true
+        value: 80
       - name: WORKERS
         inputType: FreeText
         multiline: true
