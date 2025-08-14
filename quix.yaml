@@ -272,14 +272,11 @@ deployments:
       cpu: 200
       memory: 1000
       replicas: 1
-    publicAccess:
-      enabled: true
-      urlPrefix: config-api-svc
     network:
       serviceName: config-api-svc
       ports:
-      - port: 80
-        targetPort: 80
+        - port: 80
+          targetPort: 80
     variables:
       - name: KAFKA_TOPIC
         inputType: OutputTopic
