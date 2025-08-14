@@ -277,9 +277,6 @@ deployments:
       urlPrefix: config-api-svc
     network:
       serviceName: config-api-svc
-      ports:
-        - port: 80
-          targetPort: 8080
     variables:
       - name: KAFKA_TOPIC
         inputType: OutputTopic
