@@ -41,19 +41,6 @@ the UI, so make sure you save the value somewhere.
 Other services will reference these secrets directly in their project deployment 
 configurations, so they do not need to be manually entered.
 
-### Secrets with Dependencies
-
->!!!IMPORTANT!!!
-
-This template has secrets with specific formatting/dependencies
-in order to function as expected:
-
-- **MONGO_URL**: `mongodb://admin:<MONGO_PASSWORD>@mongodb:27017/?authSource=admin` 
-
-fill in _MONGO_PASSWORD_ with the same value used for the `mongo_password`
-secret (which was also set during secret setup). 
-
-
 ### Service Startup Delays and Application Restarts
 
 Upon first sync, it is normal that some applications may restart/error a few times while 
