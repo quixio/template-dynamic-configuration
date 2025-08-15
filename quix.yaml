@@ -196,7 +196,7 @@ deployments:
         inputType: InputTopic
         description: This is the input topic
         required: true
-        value: config_processed_data
+        value: config_enriched_data
       - name: INFLUXDB_HOST
         inputType: FreeText
         description: Host address for the InfluxDB instance.
@@ -244,8 +244,8 @@ deployments:
         inputType: FreeText
         description: The number of seconds that sink holds before flush data to the InfluxDb
         value: 1
-  - name: HTTP Config Processor
-    application: http-config-processor
+  - name: HTTP Config Enricher
+    application: http-config-enricher
     version: latest
     deploymentType: Service
     resources:
@@ -264,7 +264,7 @@ deployments:
       - name: output
         inputType: OutputTopic
         description: Name of the output topic to write to.
-        value: config_processed_data
+        value: config_enriched_data
   - name: Configuration API svc
     image: quixcontainerregistry.azurecr.io/dynamicconfigurationservice:20250812.2
     deploymentType: Service
@@ -379,6 +379,6 @@ topics:
     dataTier: Bronze
   - name: normalized_data
     dataTier: Silver
-  - name: config_processed_data
+  - name: config_enriched_data
     dataTier: Silver
   - name: config-updates
