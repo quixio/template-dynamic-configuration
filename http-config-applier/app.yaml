@@ -1,4 +1,4 @@
-name: HTTP Config Enricher
+name: HTTP Config Applier
 language: python
 variables:
   - name: DATA_TOPIC
