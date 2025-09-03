@@ -413,4 +413,6 @@ topics:
     dataTier: Silver
   - name: config_enriched_data
     dataTier: Silver
+  - name: config_applied_data
+    dataTier: Silver
   - name: config-updates
