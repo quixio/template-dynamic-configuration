@@ -196,7 +196,7 @@ deployments:
         inputType: InputTopic
         description: This is the input topic
         required: true
-        value: config_enriched_data
+        value: config_applied_data
       - name: INFLUXDB_HOST
         inputType: FreeText
         description: Host address for the InfluxDB instance.
@@ -261,10 +261,42 @@ deployments:
         inputType: InputTopic
         description: Name of the config topic to listen to.
         value: config-updates
-      - name: output
+      - name: OUTPUT_TOPIC
         inputType: OutputTopic
         description: Name of the output topic to write to.
         value: config_enriched_data
+      - name: LOOKUP_FIELDS_JSON
+        inputType: FreeText
+        description: a JSON-serialized string that contains the desired field names with corresponding config field references. See 'get_fields' function in code for example.
+        multiline: true
+        value: |
+          {
+            "editor_name": {"type": "printer-config", "default": null, "jsonpath": "editor_name"},
+            "field_scalar": {"type": "printer-config", "default": 1.0, "jsonpath": "field_scalar"},
+            "mapping": {"type": "printer-config", "default": {}, "jsonpath": "mapping"}
+          }
+      - name: CONSUMER_GROUP_NAME
+        inputType: FreeText
+        description: name of the kafka consumer group
+        multiline: false
+        value: quix-configuration-enricher
+  - name: HTTP Config Applier
+    application: http-config-applier
+    version: latest
+    deploymentType: Service
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: Name of the data topic to listen to.
+        value: config_enriched_data
+      - name: output
+        inputType: OutputTopic
+        description: Name of the output topic to write to.
+        value: config_applied_data
   - name: Configuration API svc
     image: quixcontainerregistry.azurecr.io/dynamicconfigurationservice:20250812.2
     deploymentType: Service

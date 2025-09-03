@@ -1,97 +1,70 @@
-# import the Quix Streams modules for interacting with Kafka.
-# For general info, see https://quix.io/docs/quix-streams/introduction.html
-from quixstreams import Application
-from quixstreams.models.topics import Topic
-from quixstreams.dataframe.joins.lookups import (
-    QuixConfigurationService,
-    QuixConfigurationServiceJSONField as Field
-)
-
 import os
-from datetime import datetime
+import json
 
-# for local dev, load env vars from a .env file
-# from dotenv import load_dotenv
-# load_dotenv()
-
-
-def get_quix_config_lookup(topic: Topic) -> QuixConfigurationService:
-    return QuixConfigurationService(
-        topic=topic,
-        broker_address=os.environ["Quix__Broker__Address"],
-    )
+from quixstreams.dataframe.joins.lookups.quix_configuration_service import QuixConfigurationService
+from quixstreams.dataframe.joins.lookups.quix_configuration_service.lookup import JSONField
+from quixstreams import Application
 
 
-def config_apply(row: dict) -> dict:
+def get_fields():
     """
-    Applies the printer machine configs retrieved from QuixConfigurationManager.
-    The config is a dict that looks like:
-    {"editor_name": "The Editor", "mapping": {"T001": "sensor_1", "T002": "sensor_2"}, "field_scalar": .50}
-    """
-    final_row = {
-        "machine": row.pop("machine"),
-        "config_editor": row.pop("editor_name"),
-        "timestamp": row.pop("timestamp"),
+    The LOOKUP_FIELDS_JSON should be a JSON formatted like this example:
+    {
+        "f1": {"type": "cfg-name", "default": "value", "jsonpath": "path.to.f1"},
+        "f2": {"type": "cfg-name", "default": null, "jsonpath": "path.to.f2"},
+        "f3": {"type": "cfg-name", "default": 1.0, "jsonpath": "path.to.f3"},
     }
-    scalar = float(row.pop("field_scalar"))
-    mapping = row.pop("mapping")
-    for field_id in row.keys():
-        final_row[mapping.get(field_id, field_id)] = row[field_id] * scalar
-    return final_row
+
+    If this environment-based approach is too restrictive, replace it with custom logic.
+    """
+    return {
+        field_name: JSONField(**field)
+        for field_name, field in json.loads(os.environ["LOOKUP_FIELDS_JSON"]).items()
+    }
 
 
 def main():
-    # App setup
+    """
+    This template deploys a simple enricher using the QuixConfigurationService, which
+    enriches by performing a join by adding fields specified by the user in the
+    LOOKUP_FIELDS_JSON environment variable.
+
+    The join is achieved by retrieves configs from a specified topic maintained by a
+    `Quix Dynamic Configuration Service`.
+
+    The `Quix Dynamic Configuration Service` itself helps manage versioning of configs,
+    and the QuixConfigurationService helps streamline interacting with it.
+
+    The respective config applied is based on a combination of message key and the config "type"
+    specified.
+    """
+
     app = Application(
-        consumer_group="http_config_enricher",
-        auto_create_topics=True,
-        auto_offset_reset="earliest"
+        consumer_group=os.environ["CONSUMER_GROUP_NAME"],
+        auto_offset_reset="earliest",
+        commit_interval=float(os.environ.get("BATCH_TIMEOUT", "1")),
+        commit_every=int(os.environ.get("BATCH_SIZE", "1000"))
     )
 
     data_topic = app.topic(name=os.environ["DATA_TOPIC"], key_deserializer="str")
     config_topic = app.topic(name=os.environ["CONFIG_TOPIC"])
-    output_topic = app.topic(name=os.environ["output"])
+    output_topic = app.topic(name=os.environ["OUTPUT_TOPIC"])
     sdf = app.dataframe(topic=data_topic)
 
-    # The QuixConfigurationService helps manage versioning of configs.
-    # It communicates with the `Configuration API svc` to retrieve configs
-    # based on a combination of message key and config "type".
-    # The retrieved structure is templated (with the ability to customize as needed)
-    # and for this example can be inspected in the `Machine Config UI` frontend.
-    enricher = QuixConfigurationService(
-        topic=config_topic,
-        app_config=app.config,
+    # Enrich data using the config service (lookup_join)
+    sdf = sdf.join_lookup(
+        lookup=QuixConfigurationService(
+            topic=config_topic,
+            app_config=app.config,
+        ),
+        fields=get_fields()
     )
 
-    # Enrich data using defined configs (lookup_join)
-    sdf = sdf.join_lookup(
-        lookup=enricher,
-        fields={
-            "editor_name": Field(
-                type="printer-config",
-                default=None,
-                jsonpath="editor_name"
-            ),
-            "field_scalar": Field(
-                type="printer-config",
-                default=1.0,
-                jsonpath="field_scalar"
-            ),
-            "mapping": Field(
-                type="printer-config",
-                default={},
-                jsonpath="mapping"
-            ),
-        }
-    ).apply(config_apply)
-
     # Finish off by writing to the final result to the output topic
-    sdf.to_topic(output_topic, key=lambda row: row["machine"])
-
+    sdf.to_topic(output_topic)
     # With our pipeline defined, now run the Application
     app.run()
 
 
-# It is recommended to execute Applications under a conditional main
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
