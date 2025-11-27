@@ -53,6 +53,16 @@ up and running.
 
 ## Project Architecture
 
+### Deployment Groups
+
+Services in `quix.yaml` are organized using the `group` parameter to logically separate different functional areas of the pipeline. This helps with visual organization in the Quix UI and makes the architecture easier to understand.
+
+| Group | Services | Purpose |
+|-------|----------|---------|
+| *(ungrouped)* | HTTP API Source, HTTP Data Normalization, HTTP Config Enricher, InfluxDB2 Sink, Grafana, Machine Config UI, Dynamic Configuration Manager | Core data ingestion and processing pipeline |
+| **Mock Data Source** | OPC UA Server, OPC UA Source, HTTP Sink | Simulates external data sources for testing |
+| **Aux services** | InfluxDB2, MongoDB | Supporting infrastructure services |
+
 ### HTTP Ingestion and Processing Pipeline
 
 This is the HTTP-based data ingestion and processing portion of the project:
