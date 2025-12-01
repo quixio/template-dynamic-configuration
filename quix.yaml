@@ -354,6 +354,15 @@ deployments:
     application: config-frontend
     version: latest
     deploymentType: Service
+    plugin:
+      embeddedView:                
+        enabled: true            
+        hideHeader: true       
+        default: true
+      sidebarItem:                
+        show: true               
+        label: "Input form"    
+        icon: checklist  
     resources:
       cpu: 200
       memory: 500
@@ -370,6 +379,33 @@ deployments:
         inputType: Secret
         required: true
         secretKey: config_ui_auth_token
+  - name: Dynamic Configuration Manager
+    application: DynamicConfiguration
+    version: latest
+    deploymentType: Managed
+    plugin:
+      embeddedView:                
+        enabled: true            
+        hideHeader: true       
+        default: true
+      sidebarItem:                
+        show: true               
+        label: "Configurations"    
+        icon: "tune"            
+    resources:
+      cpu: 100
+      memory: 500
+      replicas: 1
+    network:
+      serviceName: config-api-svc
+    configuration:
+      topic: config-updates
+      mongoHost: mongodb
+      mongoPort: 27017
+      mongoUser: admin
+      mongoPasswordSecret: mongo_password
+      mongoDatabase: quix
+      mongoCollection: configuration-api
 
 # This section describes the Topics of the data pipeline
 topics:
