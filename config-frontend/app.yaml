@@ -1,15 +1,10 @@
 name: machine-configuration-ui
-language: Python
+language: NodeJS
 variables:
   - name: CONFIG_API_BASE_URL
     inputType: FreeText
     multiline: false
     required: true
-  - name: CONFIG_UI_AUTH_TOKEN
-    inputType: Secret
-    multiline: false
-    required: true
 dockerfile: dockerfile
-runEntryPoint: main.py
-defaultFile: main.py
-libraryItemId: streamlit
+runEntryPoint: build/index.js
+defaultFile: src/routes/+page.svelte

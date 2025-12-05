@@ -301,6 +301,15 @@ deployments:
     application: config-frontend
     version: latest
     deploymentType: Service
+    plugin:
+      embeddedView:                
+        enabled: true            
+        hideHeader: true       
+        default: true
+      sidebarItem:                
+        show: true               
+        label: "Input form"    
+        icon: checklist  
     resources:
       cpu: 200
       memory: 500
@@ -321,6 +330,15 @@ deployments:
     application: DynamicConfiguration
     version: latest
     deploymentType: Managed
+    plugin:
+      embeddedView:                
+        enabled: true            
+        hideHeader: true       
+        default: true
+      sidebarItem:                
+        show: true               
+        label: "Configurations"    
+        icon: "tune"            
     resources:
       cpu: 100
       memory: 500

@@ -1,165 +1,137 @@
-# Experiment Configuration Form (Flet)
+# Machine Configuration UI
 
-A modern Flet-based desktop/web application for creating and managing experiment configurations in the Configuration Management System.
-
-![screenshot](screenshot.png)
-
-## Overview
-
-This service provides an enhanced alternative to the Streamlit form with better user experience, routing capabilities, and desktop application support. Built with Google's Flet framework, it offers native-like performance and responsive design.
+A Svelte-based frontend application for managing machine/printer configurations through the Quix Configuration API.
 
 ## Features
 
-- **Modern UI**: Clean, responsive interface with dark theme
-- **Enhanced Routing**: URL-based navigation with deep linking support
-- **Real-time Updates**: Dynamic configuration loading and form state management
-- **Desktop/Web Support**: Runs as both desktop application and web service
-- **Advanced Form Controls**: Rich UI components with better user interaction
-- **Configuration Management**: Full CRUD operations for experiment configurations
+- Token-based authentication
+- Create and edit machine configurations
+- Dynamic sensor mapping interface
+- Real-time form validation
+- Deep linking to specific configurations
+- URL-based routing with browser navigation support
 
-## Architecture
+## Tech Stack
 
-The application is structured with:
-
-- **main.py**: Main Flet application with UI components and routing
-- **configuration_svc.py**: Service layer for Configuration API integration
-- **storage/**: Local data storage for application state
-
-## Form Features
-
-### Configuration Selection
-- Dropdown with existing configurations
-- URL routing for direct configuration access
-- Real-time configuration loading
-
-### Form Fields
-- **Experiment Name**: Text input with validation
-- **Machine ID**: Unique identifier input
-- **Test Engineer**: Engineer name input
-- **Location**: Dropdown (Prague, Dresden, London)
-- **Toner Material**: Material selection (ABS, PLA)
-- **Price per kg**: Auto-calculated pricing (ABS: €22/kg, PLA: €18/kg)
-
-### Sensor Mapping Interface
-- Dynamic table with add/remove functionality
-- Key-value pair configuration
-- Visual feedback for mapping changes
-- Icon-based row management
-
-## API Integration
-
-Integrates with Configuration API using the same format as the Streamlit version:
-
-```json
-{
-  "metadata": {
-    "type": "experiment-cfg",
-    "target_key": "machine1",
-    "valid_from": "2025-06-27T13:01:09.830Z",
-    "category": "Test rig"
-  },
-  "content": {
-    "experiment_name": "Test Experiment",
-    "mapping": {"sensor1": "temperature"},
-    "machine_id": "machine1",
-    "test_engineer": "Engineer Name",
-    "location": "Prague",
-    "MATERIAL": "abs",
-    "price_per_kg": 22.0
-  }
-}
-```
+- **Framework:** SvelteKit
+- **Runtime:** Node.js 20
+- **Styling:** CSS (no external dependencies)
 
 ## Environment Variables
 
-- **CONFIG_API_BASE_URL**: Base URL of the Configuration API service
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `CONFIG_API_BASE_URL` | Yes | Base URL of the Configuration API |
+| `CONFIG_UI_AUTH_TOKEN` | Yes | Token for UI authentication |
+| `Quix__Sdk__Token` | Auto | SDK token for API authentication (provided by Quix) |
 
 ## Development
 
-### Local Development
+### Prerequisites
+
+- Node.js 20 or later
+- npm
+
+### Setup
 
 ```bash
 # Install dependencies
-pip install -r requirements.txt
+npm install
 
-# Set environment variables
-export CONFIG_API_BASE_URL="http://localhost:8080/api/v1"
-
-# Run as web application
-python main.py
-
-# Run as desktop application (requires Flet desktop)
-flet main.py
+# Start development server
+npm run dev
 ```
 
-### Docker Deployment
+The development server will start at `http://localhost:3000`.
+
+### Build
 
 ```bash
-# Build Docker image
-docker build -t machine-configuration-ui .
-
-# Run container
-docker run -p 80:80 -e CONFIG_API_BASE_URL="http://api:8080/api/v1" machine-configuration-ui
+npm run build
 ```
+
+### Preview Production Build
+
+```bash
+npm run preview
+```
+
+## Project Structure
+
+```
+config-frontend/
+├── src/
+│   ├── lib/
+│   │   ├── components/
+│   │   │   ├── Auth.svelte           # Authentication form
+│   │   │   ├── ConfigForm.svelte     # Main configuration form
+│   │   │   └── SensorMapping.svelte  # Dynamic sensor mapping table
+│   │   ├── configurationService.js   # API integration layer
+│   │   └── stores.js                 # Svelte stores for state
+│   ├── routes/
+│   │   ├── config/[machineId]/       # Edit configuration route
+│   │   ├── +layout.svelte            # Main layout
+│   │   ├── +layout.js                # Client-side layout load
+│   │   ├── +layout.server.js         # Server-side environment injection
+│   │   └── +page.svelte              # Home/create configuration page
+│   ├── app.css                       # Global styles
+│   └── app.html                      # HTML template
+├── static/
+│   └── favicon.png
+├── dockerfile                        # Docker configuration
+├── package.json
+├── svelte.config.js
+└── vite.config.js
+```
+
+## Docker
+
+Build and run with Docker:
+
+```bash
+docker build -t config-frontend .
+docker run -p 80:80 \
+  -e CONFIG_API_BASE_URL=http://config-api-svc/api/v1 \
+  -e CONFIG_UI_AUTH_TOKEN=your-secret-token \
+  config-frontend
+```
+
+## API Endpoints Used
+
+The application communicates with the following Configuration API endpoints:
+
+- `GET /configurations` - Fetch existing configurations
+- `GET /configurations/{id}/content` - Fetch full configuration details
+- `POST /configurations` - Create new configuration
+- `PUT /configurations/{id}` - Update existing configuration
 
 ## Usage
 
-### Web Application
-1. Navigate to the deployed URL
-2. Access specific configurations via `/config/{machine_id}` routes
-3. Use the interface to create/edit configurations
+### Authentication
+1. Navigate to the application URL
+2. Enter the authentication token (set via `CONFIG_UI_AUTH_TOKEN`)
+3. Access the configuration interface
 
-### Desktop Application
-1. Install Flet on your system
-2. Run the application directly
-3. Enjoy native desktop performance
+### Creating a Configuration
+1. Select "Create New Configuration" from the dropdown
+2. Fill in Machine ID, Editor Name, and Field Scalar
+3. Add sensor mappings (key-value pairs)
+4. Click "Create Configuration"
 
-## Advanced Features
+### Editing a Configuration
+1. Select an existing configuration from the dropdown
+2. Modify the fields as needed
+3. Click "Update Configuration"
 
-### Routing System
-- URL-based navigation: `/config/{machine_id}`
-- Deep linking support for direct configuration access
-- Browser back/forward button support
+### Deep Linking
+Access specific configurations directly via URL:
+```
+/config/{machine_id}
+```
 
-### State Management
-- Persistent form state across navigation
-- Configuration caching for better performance
-- Error state recovery and validation
+## Form Fields
 
-### UI Components
-- Modern Material Design interface
-- Responsive layout for different screen sizes
-- Icon-based actions and visual feedback
-- Success/error message banners
-
-### Configuration Service
-- Abstracted API communication layer
-- Error handling and retry logic
-- Configuration validation and transformation
-- Duplicate detection for machine IDs
-
-## Error Handling
-
-Comprehensive error handling includes:
-- API connectivity issues
-- Form validation errors
-- Duplicate configuration detection
-- Network timeout recovery
-- User-friendly error messages with dismissible banners
-
-## Advantages over Streamlit Version
-
-- **Better Performance**: Native application performance
-- **Enhanced UX**: More responsive and interactive interface
-- **Routing**: Proper URL routing and navigation
-- **Desktop Support**: Can run as native desktop application
-- **State Management**: Better handling of form state and navigation
-- **Visual Design**: Modern Material Design components
-
-## Technical Details
-
-- **Framework**: Flet (Python-based Flutter wrapper)
-- **Port**: 80 (configurable)
-- **Host**: 0.0.0.0 (all interfaces)
-- **View**: Web browser mode
-- **Storage**: Local storage for temporary data
+- **Machine ID**: Unique identifier for the machine (cannot be changed after creation)
+- **Editor Name**: Name of the person editing the configuration
+- **Field Scalar**: Numeric scaling factor applied to sensor values
+- **Sensor Mappings**: Key-value pairs mapping sensor identifiers to display names

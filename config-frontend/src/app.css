@@ -1,0 +1,139 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+	background-color: #0d1117;
+	color: #e6edf3;
+	line-height: 1.6;
+}
+
+.container {
+	max-width: 800px;
+	margin: 0;
+	padding: 2rem;
+}
+
+.card {
+	background: #161b22;
+	border-radius: 6px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+	padding: 1.5rem;
+	margin-bottom: 1rem;
+	border: 1px solid #30363d;
+}
+
+.form-group {
+	margin-bottom: 1.25rem;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 0.5rem;
+	font-weight: 500;
+	color: #8b949e;
+	font-size: 0.875rem;
+}
+
+.form-group input,
+.form-group select {
+	width: 100%;
+	padding: 0.625rem 0.75rem;
+	border: 1px solid #30363d;
+	border-radius: 6px;
+	font-size: 0.875rem;
+	transition: border-color 0.2s, background-color 0.2s;
+	background-color: #0d1117;
+	color: #e6edf3;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+	outline: none;
+	border-color: #13d194;
+	background-color: #0d1117;
+	box-shadow: 0 0 0 3px rgba(19, 209, 148, 0.15);
+}
+
+.form-group input::placeholder {
+	color: #484f58;
+}
+
+.form-group select option {
+	background-color: #161b22;
+	color: #e6edf3;
+}
+
+.btn {
+	padding: 0.625rem 1rem;
+	border: none;
+	border-radius: 6px;
+	font-size: 0.875rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background-color 0.15s, transform 0.1s;
+}
+
+.btn:hover {
+	transform: translateY(-1px);
+}
+
+.btn-primary {
+	background-color: #13d194;
+	color: #0d1117;
+}
+
+.btn-primary:hover {
+	background-color: #0fb882;
+}
+
+.btn-secondary {
+	background-color: #21262d;
+	color: #e6edf3;
+	border: 1px solid #30363d;
+}
+
+.btn-secondary:hover {
+	background-color: #30363d;
+}
+
+.btn-danger {
+	background-color: #da3633;
+	color: white;
+}
+
+.btn-danger:hover {
+	background-color: #bf2d2a;
+}
+
+.btn-success {
+	background-color: #13d194;
+	color: #0d1117;
+}
+
+.btn-success:hover {
+	background-color: #0fb882;
+}
+
+h1 {
+	color: #e6edf3;
+	margin-bottom: 1.25rem;
+	font-size: 1.5rem;
+	font-weight: 600;
+}
+
+h2 {
+	color: #8b949e;
+	margin-bottom: 0.75rem;
+	font-size: 1rem;
+	font-weight: 500;
+}
+
+.error-text {
+	color: #f85149;
+	font-size: 0.75rem;
+	margin-top: 0.25rem;
+}
